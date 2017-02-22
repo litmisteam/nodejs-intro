@@ -13,7 +13,7 @@ Short URL: [bit.ly/litmislearn-nodejsintro](http://bit.ly/litmislearn-nodejsintr
 
 **Table Of Contents**
 
-[[TOC]]
+
 
 # Introduction
 
@@ -33,7 +33,7 @@ This course is both a lab and a reference.  It is a lab considering there is an 
 
 * When you see a % sign that means you are at a shell prompt (aka PASE environment on IBM i)
 
-* When you see> that means you are in the Node.js REPL (more on that later).
+* When you see `>` that means you are in the Node.js REPL (more on that later).
 
 
 
