@@ -2,13 +2,13 @@
 
 Now it's time to use HTML5's WebSockets.
 
-I often find myself wishing things were simpler with web development, specifically the link between the browser and server.  I don't want to think as much about the underlying technology.  I’d rather focus more on meeting the overall business need. Many technologies have improved in this area over the years using concepts of convention over configuration (thank you, Ruby on Rails). Today, I am tooting the horn of JavaScript and Node.js in the implementation of HTML5 WebSockets.
+I often find myself wishing things were simpler with web development, specifically the link between the browser and server.  I don't want to think as much about the underlying technology.  I’d rather focus more on meeting the overall business need. Many technologies have improved in this area over the years using concepts of convention over configuration \(thank you, Ruby on Rails\). Today, I am tooting the horn of JavaScript and Node.js in the implementation of HTML5 WebSockets.
 
-Wikipedia describes HTML5 WebSockets as *"a protocol providing full-duplex communication channels over a single TCP connection"*.
+Wikipedia describes HTML5 WebSockets as _"a protocol providing full-duplex communication channels over a single TCP connection"_.
 
-HTML5 is just a specification, not an implementation. It's every technology stack's responsibility to implement said spec - not only to make everything adhere to the spec but also to put some amount of focus on making usage easy for the web developer. In the case of Node.js, we have a Node Package Module (NPM) named **socket.io** that implements HTML5 WebSockets with excellence to the point of being surprisingly simple and easy to use.
+HTML5 is just a specification, not an implementation. It's every technology stack's responsibility to implement said spec - not only to make everything adhere to the spec but also to put some amount of focus on making usage easy for the web developer. In the case of Node.js, we have a Node Package Module \(NPM\) named **socket.io** that implements HTML5 WebSockets with excellence to the point of being surprisingly simple and easy to use.
 
-Our next goal is to use socket.io to create a chat application using HTML5 WebSockets, as shown in the below screenshot. 
+Our next goal is to use socket.io to create a chat application using HTML5 WebSockets, as shown in the below screenshot.
 
 ![image alt text](image_22.png)
 
@@ -26,7 +26,7 @@ This application will be created in a new directory.  We’ll install everything
 % touch index.js index.html
 ```
 
-The above will create a new directory, websock, install the Express and Socket.io modules, and create the only two files this application requires; index.js and index.html.  Paste the below HTML document into index.html.
+The above will create a new directory, `websock`, install the `express` and `socket.io` modules, and create the only two files this application requires; `index.js` and `index.html`.  Paste the below HTML document into index.html.
 
 ```html
 <!doctype html>
@@ -66,15 +66,15 @@ The above will create a new directory, websock, install the Express and Socket.i
 </html>
 ```
 
-The above is a typical HTML document.  There is CSS at the top in the `<style>` tag, HTML in the `<body>` area, and some Javascript to make things more aesthetically palatable (specifically the user experience).  Concerning the HTML in the `<body>` tag, take note of the `<ul>` entity with an id of messages.  This is where the chat log will reside.  Then there is a single `<input>` tag with an id of m which is where new messages are typed.
+The above is a typical HTML document.  There is CSS at the top in the `<style>` tag, HTML in the `<body>` area, and some Javascript to make things more aesthetically palatable \(specifically the user experience\).  Concerning the HTML in the `<body>` tag, take note of the `<ul>` entity with an id of messages.  This is where the chat log will reside.  Then there is a single `<input>` tag with an id of m which is where new messages are typed.
 
-Next there are the two `<script src="..."></script>` tags.  These are bringing in the client-side Socket.io code and jQuery from a remote CDN (Content Delivery Network).
+Next there are the two `<script src="..."></script>` tags.  These are bringing in the client-side Socket.io code and jQuery from a remote CDN \(Content Delivery Network\).
 
-Now to the interesting stuff.  Line `var client = io()` initializes the Socket.io client and connects to the default host.  The default host is wherever the index.html file was delivered from.  The page now has a WebSocket connection to the server and goes into a wait state (waiting for the user to do something).  The best way to know this is to use the Developer Tools in Chrome, as shown below.
+Now to the interesting stuff.  Line `var client = io()` initializes the Socket.io client and connects to the default host.  The default host is wherever the index.html file was delivered from.  The page now has a WebSocket connection to the server and goes into a wait state \(waiting for the user to do something\).  The best way to know this is to use the Developer Tools in Chrome, as shown below.
 
 ![image alt text](image_23.png)
 
-Once inside Chrome's Developer Tools, select the *Network* tab.  Then, select the line that has transport=websocket to see what happened in that interaction with the server.  In the *General* section we can see the browser requesting an upgrade from HTTP to WebSockets.  In the *Response Headers* section we can see the server responding that it has upgraded the connection.
+Once inside Chrome's Developer Tools, select the _Network_ tab.  Then, select the line that has transport=websocket to see what happened in that interaction with the server.  In the _General_ section we can see the browser requesting an upgrade from HTTP to WebSockets.  In the _Response Headers_ section we can see the server responding that it has upgraded the connection.
 
 Next in index.html's Javascript we have the following code.
 
@@ -86,15 +86,17 @@ Next in index.html's Javascript we have the following code.
     });
 ```
 
-This is jQuery.  The `$('form')` is what's called a selector.  This will obtain a reference to the aforementioned `<form>` and add a `submit(...)` listener.  When the form is submitted (when the user hits the Enter key) the inline anonymous function code will be run.  The call to `client.emit(...)` is sending (emitting) a communication to the server.  The `$('#m').val()` is another jQuery selector.  When a # symbol is included then jQuery will look for a tag with that id.  In this case it is the `<input>` tag.  Once a reference to the field is obtained the `.val()` method is invoked to obtain its value.  The next line is *setting* the value to blanks so it is ready for the next message from the user.
+This is jQuery.  The `$('form')` is what's called a selector.  This will obtain a reference to the aforementioned `<form>` and add a `submit(...)` listener.  When the form is submitted \(when the user hits the Enter key\) the inline anonymous function code will be run.  The call to `client.emit(...)` is sending \(emitting\) a communication to the server.  The `$('#m').val()` is another jQuery selector.  When a \# symbol is included then jQuery will look for a tag with that id.  In this case it is the `<input>` tag.  Once a reference to the field is obtained the `.val()` method is invoked to obtain its value.  The next line is _setting_ the value to blanks so it is ready for the next message from the user.
 
-To maintain flow order we will hold off talking about the last bit of Javascript on the client and instead look at the server portion.  Below is the content of index.js.  **Reminder:** Replace 60263 with your own port.
+To maintain flow order we will hold off talking about the last bit of Javascript on the client and instead look at the server portion.  Below is the content of `index.js`.  
+
+**Reminder:** Replace 60263 with your own port.
 
 ```js
 var app  = require('express')()
 var http = require('http').Server(app)
 var io   = require('socket.io')(http)
- 
+
 app.get('/', function(req, res){
   res.sendfile('index.html')
 })
@@ -115,7 +117,7 @@ http.listen(port, function(){
 })
 ```
 
-You'll notice a couple differences in the `require(...)` statements.  The line with `require('express')()` is obtaining the express module.  Nothing new there.  What *is* new is the second set of parentheses at the end.  If we go to the [ExpressJs source code](https://github.com/expressjs/express/blob/master/lib/express.js#L27) we can see it returns a function.  So the `require(...)()` simply means, "retrieve the code and immediately invoke it and store the result in the variable to the left of the equals sign".  In this case ExpressJs will invoke the [createApplication()](https://github.com/expressjs/express/blob/master/lib/express.js#L36) method, which in turn creates an object and returns it, which we store in the variable named app.  
+You'll notice a couple differences in the `require(...)` statements.  The line with `require('express')()` is obtaining the express module.  Nothing new there.  What _is_ new is the second set of parentheses at the end.  If we go to the [ExpressJs source code](https://github.com/expressjs/express/blob/master/lib/express.js#L27) we can see it returns a function.  So the `require(...)()` simply means, "retrieve the code and immediately invoke it and store the result in the variable to the left of the equals sign".  In this case ExpressJs will invoke the [createApplication\(\)](https://github.com/expressjs/express/blob/master/lib/express.js#L36) method, which in turn creates an object and returns it, which we store in the variable named app.
 
 The next line, `var http = require('http').Server(app)`, immediately invokes method `Server()` which is in fact exported [here](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L254).  The [definition of ](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L222)[`Server(...)`](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L222) receives in a request listener, which is what Express gave us, so it makes sense we can pass the app variable to it.
 
@@ -139,4 +141,9 @@ Your websocket chat application is complete.  Use the below command to start it 
 % node index.js
 ```
 
-**That concludes the IBM i Node.js Intro course.**  If you have any questions or comments please send them to [team@litmis.com](mailto:team@litmis.com)
+---
+
+## **That concludes the IBM i Node.js Intro course!**
+
+If you have any questions or comments please send them to [team@litmis.com](mailto:team@litmis.com)
+
