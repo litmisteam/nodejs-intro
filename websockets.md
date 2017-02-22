@@ -10,7 +10,7 @@ HTML5 is just a specification, not an implementation. It's every technology stac
 
 Our next goal is to use socket.io to create a chat application using HTML5 WebSockets, as shown in the below screenshot. 
 
-![image alt text](image_22.png)
+![image alt text](img/image_22.png)
 
 The concept is that two browser clients will obtain a WebSocket connection to the server.  Chat messages entered in one browser are delivered from the server to the client in another browser, without the client polling the server. It is important to note the lack of polling in that last sentence. That’s how things were done in the past. Now, the server can initiate communication down to the client. Very cool!
 
@@ -72,7 +72,7 @@ Next there are the two `<script src="..."></script>` tags.  These are bringing i
 
 Now to the interesting stuff.  Line `var client = io()` initializes the Socket.io client and connects to the default host.  The default host is wherever the index.html file was delivered from.  The page now has a WebSocket connection to the server and goes into a wait state (waiting for the user to do something).  The best way to know this is to use the Developer Tools in Chrome, as shown below.
 
-![image alt text](image_23.png)
+![image alt text](img/image_23.png)
 
 Once inside Chrome's Developer Tools, select the *Network* tab.  Then, select the line that has transport=websocket to see what happened in that interaction with the server.  In the *General* section we can see the browser requesting an upgrade from HTTP to WebSockets.  In the *Response Headers* section we can see the server responding that it has upgraded the connection.
 

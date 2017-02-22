@@ -155,6 +155,6 @@ Notice how PORT=60263 is specified *before* the node index.js portion.  This is 
 
 Go ahead and open a browser window to see your Express hello world app running, as shown below.
 
-![image alt text](image_13.png)
+![image alt text](img/image_13.png)
 
 Going back to the index.js code, lines 4 and 9 have what's called an "**inline anonymous function"**.  These are *all over the place* in Node.js.  An understanding of them is essential to adequately write applications in Node.js.  Before going further it would be good to learn more about Javascript functions.

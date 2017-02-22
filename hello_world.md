@@ -2,7 +2,7 @@
 
 This next step requires opening the shell so we can type commands into PASE on IBM i.  Below is the button you need to press to open the shell (aka terminal).
 
-![image alt text](image_5.png)
+![image alt text](img/image_5.png)
 
 Node.js has already been installed in your Litmis Space so we won't be going over those details here.  With that said it is necessary to verify the installation which can be done with the below command from the Shell (aka terminal).
 
@@ -25,19 +25,19 @@ First create a new directory to hold this new application, cd (change directory)
 
 Now go back to your Litmis Spaces page and click the editor button, as shown below.
 
-![image alt text](image_6.png)
+![image alt text](img/image_6.png)
 
 This will open a new browser tab with the browser-based editor, as shown below.  **NOTE:** To see newly created files like hello/app.js you will need to right click on the root folder and select "Refresh".
 
-![image alt text](image_7.png)
+![image alt text](img/image_7.png)
 
 Before we edit app.js we need to obtain some system information; specifically the port our web application will be listening to for inbound requests.  Go to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button to obtain the port that is dedicated to your user profile, as shown below.
 
-![image alt text](image_8.png)
+![image alt text](img/image_8.png)
 
 Then in the pop-up window you should see the below section where the ports are delineated.
 
-![image alt text](image_9.png)
+![image alt text](img/image_9.png)
 
 Now go to the browser-based editor and paste *(Ctrl+Shift+V) *the following into the newly created app.js file.  You may need to right click in the directory tree to refresh the list.  
 
@@ -65,7 +65,7 @@ Server running at http://0.0.0.0:60263
 
 As you can see it output the value we placed in the call to console.log(...).  Now open a new tab in your browser and enter spaces.litmis.com:<your port>. You should see the below screenshot.
 
-![image alt text](image_10.png)
+![image alt text](img/image_10.png)
 
 Wow!  That was simple!
 
