@@ -6,14 +6,14 @@ _A package manager or package management system is a collection of software tool
 
 Package managers aren’t a new concept, though I believe they’re getting incrementally better. Such is the case with the Node.js Package Manager, npm for short. The npm tool makes it easy for JavaScript developers to share, reuse and maintain code. Publicly available npms are hosted on [npmjs.com](https://www.npmjs.com/). Here you’ll find a vast repository where many thousands of Node.js packages reside. The best part is it’s free to the community—\(one of the reasons Node.js has taken off so well\).
 
-Now let's test npm to see how it works.  First change to your home directory and create a new directory named app1 and cd into it, as shown below.  Note the tilde \(~\) is a shortcut to the home directory.  Note the two amersands \(&&\) are a way to combine two commands on a single line.
+Now let's test npm to see how it works.  First change to your home directory and create a new directory named app1 and cd into it, as shown below.  Note the tilde \(`~`\) is a shortcut to the home directory.  Note the two ampersands \(`&&`\) are a way to combine two commands on a single line.
 
 ```sh
 % cd ~/
 % mkdir app1 && cd app1
 ```
 
-Now run npm init to create what's called the package.json file which will hold information about the application like the author, a description, and dependencies.  You will be prompted for many values, as shown below.  Provide input or hit the Enter key to accept the default.
+Now run `npm init` to create what's called the `package.json` file which will hold information about the application like the author, a description, and dependencies.  You will be prompted for many values, as shown below.  Provide input or hit the `Enter` key to accept the default.
 
 ```sh
 % npm init
@@ -49,7 +49,7 @@ About to write to /home/USR2L6RU/app1/package.json:
 Is this ok? (yes) 
 ```
 
-You now have a file named packages.json and can view it using the cat command, as shown below.
+You now have a file named `packages.json` and can view it using the `cat` command, as shown below.
 
 ```sh
 % cat package.json 
@@ -66,7 +66,7 @@ You now have a file named packages.json and can view it using the cat command, a
 }
 ```
 
-Next we will install one of the most popular Node.js modules - a web framework named [Express](http://expressjs.com/) which will be used to build a web app.  The --save option tells npm to add express as a dependency in package.json.
+Next we will install one of the most popular Node.js modules - a web framework named [Express](http://expressjs.com/) which will be used to build a web app.  The `--save` option tells `npm` to add express as a dependency in `package.json`.
 
 ```sh
 % npm install express --save
@@ -98,7 +98,7 @@ express@4.13.4 node_modules/express
 └── type-is@1.6.12 (media-typer@0.3.0, mime-types@2.1.10)
 ```
 
-After installing the express module you should see a log, as shown above.  When `npm` downloads `express` it looks at its `package.json` file to learn what other dependencies need to be downloaded and also obtains them.  This is a recursive process until the bottom of the dependency list is reached.  All the downloaded modules are stored in the `node_modules/` directory of your current directory.
+After installing the `express` module you should see a log, as shown above.  When `npm` downloads `express` it looks at its `package.json` file to learn what other dependencies need to be downloaded and also obtains them.  This is a recursive process until the end of the dependency list is reached.  All the downloaded modules are stored in the `node_modules/` directory of your current directory.
 
 Now create a new file named `index.js` in directory `app1` and paste the following content into it so we can see Express in action.
 
@@ -118,9 +118,11 @@ app.listen(port, function() {
 
 This is another hello world example using Express instead of going direct to the base Node.js capabilities.  The first line is bringing in the `express` module.  Notice there isn't a relative path specified.  You can omit the path because the express module is located in the `node_modules/` directory, which is part of the search path when loading modules.
 
-Line 2 is obtaining a reference to the Express application object which is subsequently used on line 4 to listen for the "root route".  A "route" is a path from the browser to code in your Node.js application.  In this case we have a single route \(i.e. '/'\) defined so when we bring up the root of the website it will display "Hello World!".
+Line 2 is obtaining a reference to the Express application object which is subsequently used on line 4 to listen for the "root route".  A "route" is a path from the browser to code in your Node.js application.  In this case we have a single route \(i.e. `'/'`\) defined so when we bring up the root of the website it will display **"Hello World!"**.
 
-On line 8 we occupy the port variable.  The double vertical pipe syntax \(`||`\) is the _or_ operator which will first check whether `process.env.PORT` has a value.  If not, it will occupy it with the value to the right of the vertical pipes \(i.e. `60263`\).  The `process.env` object gives us access to environment variables from the current process \(aka IBM i job\).  What this means is an overriding port can be passed when starting the application, as shown below.  Go ahead and try running your app on the various ports dedicated to your profile.  **Reminder:** Your ports are located in the Space information pop-up \(the 'i' button\).
+On line 8 we occupy the port variable.  The double vertical pipe syntax \(`||`\) is the _or_ operator which will first check whether `process.env.PORT` has a value.  If not, it will occupy it with the value to the right of the vertical pipes \(i.e. `60263`\).  The `process.env` object gives us access to environment variables from the current process \(aka IBM i job\).  What this means is an overriding port can be passed when starting the application, as shown below.  Go ahead and try running your app on the various ports dedicated to your profile.  
+
+**Reminder:** Your ports are located in the Space information pop-up \(the 'i' button\).
 
 ```sh
 % PORT=60263 node index.js

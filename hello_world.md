@@ -27,11 +27,11 @@ Now go back to your Litmis Spaces page and click the editor button, as shown bel
 
 ![image alt text](img/image_6.png)
 
-This will open a new browser tab with the browser-based editor, as shown below.  **NOTE:** To see newly created files like hello/app.js you will need to right click on the root folder and select "Refresh".
+This will open a new browser tab with the browser-based editor, as shown below.  **NOTE:** To see newly created files like `hello/app.js` you will need to right click on the root folder and select "Refresh".
 
 ![image alt text](img/image_7.png)
 
-Before we edit app.js we need to obtain some system information; specifically the port our web application will be listening to for inbound requests.  Go to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button to obtain the port that is dedicated to your user profile, as shown below.
+Before we edit `app.js` we need to obtain some system information; specifically the port our web application will be listening to for inbound requests.  Go to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button to obtain the port that is dedicated to your user profile, as shown below.
 
 ![image alt text](img/image_8.png)
 
@@ -39,9 +39,9 @@ Then in the pop-up window you should see the below section where the ports are d
 
 ![image alt text](img/image_9.png)
 
-Now go to the browser-based editor and paste *(Ctrl+Shift+V) *the following into the newly created app.js file.  You may need to right click in the directory tree to refresh the list.  
+Now go to the browser-based editor and paste (`Ctrl+Shift+V`) the following into the newly created `app.js` file.  You may need to right click in the directory tree to refresh the list.  
 
-**NOTE:** Make sure to change the below port of 60263 to the one obtained in the previous step. Also, make sure to save your source by using Ctrl+S or menu File->Save.
+**NOTE:** Make sure to change the below port of `60263` to the one obtained in the previous step. Also, make sure to save your source by using `Ctrl+S` or menu `File->Save`.
 
 ```js
 var http = require('http')
@@ -63,11 +63,11 @@ Now go back to your console and enter the following command to start your applic
 Server running at http://0.0.0.0:60263
 ```
 
-As you can see it output the value we placed in the call to console.log(...).  Now open a new tab in your browser and enter spaces.litmis.com:<your port>. You should see the below screenshot.
+As you can see it output the value we placed in the call to console.log(...).  Now open a new tab in your browser and enter `spaces.litmis.com:<your-port>`. You should see the below screenshot.
 
 ![image alt text](img/image_10.png)
 
-Wow!  That was simple!
+**Wow!  That was simple!**
 
 For the fun of it let's add a log each time a request is made using the following line of code that is colored.
 
@@ -83,7 +83,7 @@ http.createServer(function(req, res) {
 console.log('Server running at http://0.0.0.0:%d', port)
 ```
 
-Now go back to your console and hit Ctrl+C to end the current application.  Then hit the up arrow to bring up the previous command and hit enter to run it again, as shown below.  Restarting the Node.js application is necessary so it can pick up the code changes.
+Now go back to your console and hit `Ctrl+C` to end the current application.  Then hit the up arrow to bring up the previous command and hit enter to run it again, as shown below.  Restarting the Node.js application is necessary so it can pick up the code changes.
 
 ```sh
 % node app.js
