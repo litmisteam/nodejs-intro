@@ -36,7 +36,7 @@ There are four buttons which constitute actions you can take with your Space. Th
 
 # Environment Variables
 
-Each environment has specific settings that are stored in PASE environment variables.  They are as follows.  When you log into a PASE shell these are automatically set for you.  You should not modify these values.  You will see them referenced the lab.
+Each environment has specific settings that are stored in PASE environment variables.  They are as follows.  When you log into a PASE shell these are automatically set for you.  You should not modify these values.  You will see them referenced in the lab.
 
 ```
 export LITMIS_SPACE_GUID=xxxx
