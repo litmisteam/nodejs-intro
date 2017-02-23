@@ -83,29 +83,29 @@ Now it's time to make fairly extensive changes to `index.js`.  Below is the enti
 
 ```js
 
-var db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
-var body_parser = require('body-parser')
-var express = require('express')
-var app = express()
- 
+const db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
+const body_parser = require('body-parser')
+const express = require('express')
+const app = express()
+
 const dbconn = new db.dbconn()
 dbconn.conn("*LOCAL")
 const stmt = new db.dbstmt(dbconn)
 
-stmt.exec(`SET SCHEMA ${process.env.LITMIS_SCHEMA_DEVELOPMENT}`)
+const schema = process.env.LITMIS_SCHEMA_DEVELOPMENT
 
 app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
+app.set('view engine', 'pug')
 
 app.use(body_parser.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
  res.render('index', { title: 'Hey', message: 'Hey Jade!'})
 })
- 
+
 app.get('/customers', function(req, res) {
- stmt.exec(`SELECT LSTNAM, CUSNUM FROM CUSTOMER`, function(results) {
-    res.render('customers/index', { title: 'Customers', results: results})
+ stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results, err) {
+   res.render('customers/index', { title: 'Customers', results: results})
   })
 })
 
@@ -115,25 +115,26 @@ app.get('/customers/new', function(req, res) {
 
 app.post('/customers/create', function(req, res) {
   var sql = 
-    `INSERT INTO CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES (${req.body.CUSNUM}, '${req.body.LSTNAM}', '${req.body.INIT}', '${req.body.STREET}')`
-  stmt.exec(sql)
-  res.redirect('/customers')
+    `INSERT INTO ${schema}.CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES (${req.body.CUSNUM}, '${req.body.LSTNAM}', '${req.body.INIT}', '${req.body.STREET}')`
+  stmt.exec(sql, function(result, err){
+    res.redirect('/customers')
+  })
 })
 
-app.get('/customer/:id', function(req, res) {
- var sql = `SELECT * FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
- stmt.exec(sql, function(result) {
+app.get('/customers/:id', function(req, res) {
+ var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+ stmt.exec(sql, function(result, err) {
    res.render('customers/show', { title: 'Customer', result: result[0]})
  })
 })
 
 app.get('/customers/:id/edit', function(req, res) {
-  var sql = `SELECT * FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
-  stmt.exec(sql, function(result) {
+  var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(result, err) {
     res.render('customers/edit',
       { title: 'Customer',
         result: result[0],
-        form_action: util.format('/customers/%s/update', req.params.id)
+        form_action: `/customers/${req.params.id}/update`
       }
     )
   })
@@ -141,15 +142,17 @@ app.get('/customers/:id/edit', function(req, res) {
 
 app.post('/customers/:id/update', function(req, res) {
   var sql = 
-    `UPDATE CUSTOMER SET CUSNUM=${req.body.CUSNUM},LSTNAM='${req.body.LSTNAM}',INIT='${req.body.INIT}',STREET='${req.body.STREET}' WHERE CUSNUM='${req.body.CUSNUM}`
-  stmt.exec(sql)
-  res.redirect('/customers')
+    `UPDATE ${schema}.CUSTOMER SET CUSNUM=${req.body.CUSNUM},LSTNAM='${req.body.LSTNAM}',INIT='${req.body.INIT}',STREET='${req.body.STREET}' WHERE CUSNUM=${req.body.CUSNUM}`
+  stmt.exec(sql, function(result, err){
+    res.redirect('/customers')
+  })
 })
 
 app.get('/customers/:id/delete', function(req, res) {
-  var sql = `DELETE FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
-  stmt.exec(sql)
-  res.redirect('/customers')
+  var sql = `DELETE FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(results, err){
+    res.redirect('/customers')  
+  })
 })
 
 var port = process.env.PORT || process.env.LITMIS_PORT_DEVELOPMENT
@@ -158,97 +161,77 @@ app.listen(port, function() {
 })
 ```
 
-Now let's wade through the index.js changes that turn the original display-only application into a CRUD application.  The first change is a new ExpressJs middleware named body-parser, as shown below.
+Now let's wade through the `index.js` changes that turn the original display-only application into a CRUD application.  The first change is a new ExpressJs middleware named `body-parser`, as shown below.
 
 ```js
-var body_parser = require('body-parser')
+
+const body_parser = require('body-parser')
 
 . . .
 
 app.use(body_parser.urlencoded({ extended: true }))
 ```
 
-This module will take HTML form variables and place them in req.body so we can easily access form variables (i.e., req.body.CUSNUM).  Use the following command to install body-parser. The --save option saves it into package.json.
+This module will take HTML form variables and place them in `req.body` so we can easily access form variables (i.e., `req.body.CUSNUM`).  Use the following command to install `body-parser`. The `--save` option saves it into `package.json`.
 
 ```sh 
+
 % npm install body-parser --save
 ```
 
-I’ve also introduced the util module. The util.format(...) function greatly cleans up string replacement in SQL statements, as shown below.
+Next let’s dive into how the various routes have changed. When displaying data (i.e., `index.pug` and `show.pug`) you only need one route to accomplish each task. When multiple user interactions are required (i.e., display a form and then process it), then you need multiple routes to make that flow work. For example, consider the `/customers/:id/edit` and `/customers/:id/update` routes below. The `/edit` route is used to first load an existing DB2 entry into a form and the `/update` route is to process the HTML form submission. Notice how the `res.render` in the `/edit` route is setting the `form_action` view variable. This is how the `/edit` and `/new` routes can share the same HTML form, namely the `_form.pug` file.
+
+The `/update` route receives in the form submission, composes and executes an SQL UPDATE statement, and then redirects the user back to the `/customers` route.
 
 ```js
-var util = require('util')
 
-. . .
-
-var sql = util.format(
- "INSERT INTO CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES ('%s', '%s', '%s', '%s')",
- req.body.CUSNUM, req.body.LSTNAM, req.body.INIT, req.body.STREET
-)
-```
-
-In the database initialization portion, I set autoCommit to true and set the schema so we didn't have to fully qualify on each SQL statement.
-
-```js
-db.conn('*LOCAL', function(){
-  db.autoCommit(true)
-})
-
-db.exec("SET SCHEMA xxxxx_D")
-```
-
-Setting the schema globally works in this application because we’re accessing a single schema. If multiple schemas were being accessed, then qualified tables would be a better approach.
-
-Let’s dive into how the various routes have changed. When displaying data (i.e., index.jade and show.jade) you only need one route to accomplish each task. When multiple user interactions are required (i.e., display a form and then process it), then you need multiple routes to make that flow work. For example, consider the /customers/:id/edit and /customers/:id/update routes below. The /edit route is used to first load an existing DB2 entry into a form and the /update route is to process the HTML form submission. Notice how the res.render in the /edit route is setting the form_action view variable. This is how the /edit and /new routes can share the same HTML form, namely the _form.jade file.
-
-The /update route receives in the form submission, composes and executes an SQL UPDATE statement, and then redirects the user back to the /customers route.
-
-```js
 app.get('/customers/:id/edit', function(req, res) {
- var sql = util.format("SELECT * FROM CUSTOMER WHERE CUSNUM=%s", req.params.id)
- db.exec(sql, function(result) {
-   res.render('customers/edit',
-     { title: 'Customer',
-       result: result[0],
-       form_action: util.format('/customers/%s/update', req.params.id)
-     })
- })
+  var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(result, err) {
+    res.render('customers/edit',
+      { title: 'Customer',
+        result: result[0],
+        form_action: `/customers/${req.params.id}/update`
+      }
+    )
+  })
 })
 
 app.post('/customers/:id/update', function(req, res) {
- var sql = util.format(
-   "UPDATE CUSTOMER SET CUSNUM='%s',LSTNAM='%s',INIT='%s',STREET='%s' WHERE CUSNUM='%s'",
-   req.body.CUSNUM, req.body.LSTNAM, req.body.INIT, req.body.STREET, req.body.CUSNUM
- )
- db.exec(sql)
- res.redirect('/customers')
+  var sql = 
+    `UPDATE ${schema}.CUSTOMER SET CUSNUM=${req.body.CUSNUM},LSTNAM='${req.body.LSTNAM}',INIT='${req.body.INIT}',STREET='${req.body.STREET}' WHERE CUSNUM=${req.body.CUSNUM}`
+  stmt.exec(sql, function(result, err){
+    res.redirect('/customers')
+  })
 })
 ```
 
-Below are the /customers/new and /customers/create routes that are used to display an empty form and process that form’s submission, respectively. This is very similar to the /edit and /update routes previously described, including the setting of the form_action view variable to alter the path that the form will be submitted to.
+Below are the `/customers/new` and `/customers/create` routes that are used to display an empty form and process that form’s submission, respectively. This is very similar to the `/edit` and `/update` routes previously described, including the setting of the `form_action` view variable to alter the path that the form will be submitted to.
 
 ```js
+
 app.get('/customers/new', function(req, res) {
   res.render('customers/new', {result: {}, form_action: '/customers/create'})
 })
- 
+
 app.post('/customers/create', function(req, res) {
-  var sql = util.format(
-    "INSERT INTO CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES ('%s', '%s', '%s', '%s')",
-    req.body.CUSNUM, req.body.LSTNAM, req.body.INIT, req.body.STREET
-  )
-  db.exec(sql)
-  res.redirect('/customers')
+  var sql = 
+    `INSERT INTO ${schema}.CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES (${req.body.CUSNUM}, '${req.body.LSTNAM}', '${req.body.INIT}', '${req.body.STREET}')`
+  stmt.exec(sql, function(result, err){
+    res.redirect('/customers')
+  })
 })
 ```
 
-And finally, see the /customers/:id/delete route for DB2 row removal. I could have been more purist and used app.delete for the route.  However, that requires more complexity in the view layer and an app.get with an :id accomplishes the task quite nicely.
+And finally, see the `/customers/:id/delete` route for DB2 row removal. I could have been more purist and used `app.delete` for the route.  However, that requires more complexity in the view layer and an `app.get` with an `:id` accomplishes the task quite nicely.
 
-```
+```js
+
 app.get('/customers/:id/delete', function(req, res) {
-  var sql = util.format("DELETE FROM CUSTOMER WHERE CUSNUM='%s'", req.params.id)
-  db.exec(sql)
-  res.redirect('/customers')
+  var sql = `DELETE FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(results, err){
+    res.redirect('/customers')  
+  })
 })
 ```
 
@@ -263,3 +246,7 @@ Below is the **New Customer** page.
 Below is the **Edit Customer** page.
 
 ![image alt text](img/image_21.png)
+
+**That concludes the Customer CRUD application!**
+
+## Proceed to the next step

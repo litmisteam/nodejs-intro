@@ -26,11 +26,11 @@ This application will be created in a new directory.  We’ll install everything
 % touch index.js index.html
 ```
 
-The above will create a new directory, websock, install the Express and Socket.io modules, and create the only two files this application requires; index.js and index.html.  Paste the below HTML document into index.html.
+The above will create a new directory named `websock`, install the Express and Socket.io modules, and create the only two files this application requires; `index.js` and `index.html`.  Paste the below HTML document into index.html.
 
 ```html
-<!doctype html>
 
+<!doctype html>
 <html>
   <head>
     <style>
@@ -79,6 +79,7 @@ Once inside Chrome's Developer Tools, select the *Network* tab.  Then, select th
 Next in index.html's Javascript we have the following code.
 
 ```js
+
     $('form').submit(function(){
       client.emit('chat_msg', $('#m').val());
       $('#m').val('');
@@ -91,10 +92,11 @@ This is jQuery.  The `$('form')` is what's called a selector.  This will obtain 
 To maintain flow order we will hold off talking about the last bit of Javascript on the client and instead look at the server portion.  Below is the content of index.js.  **Reminder:** Replace 60263 with your own port.
 
 ```js
+
 var app  = require('express')()
 var http = require('http').Server(app)
 var io   = require('socket.io')(http)
- 
+
 app.get('/', function(req, res){
   res.sendfile('index.html')
 })
@@ -109,23 +111,24 @@ io.on('connection', function(server){
   })
 })
 
-var port = process.env.PORT || 60263
+var port = process.env.PORT || process.env.LITMIS_PORT_DEVELOPMENT
 http.listen(port, function(){
   console.log('Running on ' + port)
 })
 ```
 
-You'll notice a couple differences in the `require(...)` statements.  The line with `require('express')()` is obtaining the express module.  Nothing new there.  What *is* new is the second set of parentheses at the end.  If we go to the [ExpressJs source code](https://github.com/expressjs/express/blob/master/lib/express.js#L27) we can see it returns a function.  So the `require(...)()` simply means, "retrieve the code and immediately invoke it and store the result in the variable to the left of the equals sign".  In this case ExpressJs will invoke the [createApplication()](https://github.com/expressjs/express/blob/master/lib/express.js#L36) method, which in turn creates an object and returns it, which we store in the variable named app.  
+You'll notice a couple differences in the `require(...)` statements.  The line with `require('express')()` is obtaining the `express` module.  Nothing new there.  What *is* new is the second set of parentheses at the end.  If we go to the [ExpressJs source code](https://github.com/expressjs/express/blob/master/lib/express.js#L27) we can see it returns a function.  So the `require(...)()` simply means, "retrieve the code and immediately invoke it and store the result in the variable to the left of the equals sign".  In this case ExpressJs will invoke the [createApplication()](https://github.com/expressjs/express/blob/master/lib/express.js#L36) method, which in turn creates an object and returns it, which we store in the variable named app.  
 
 The next line, `var http = require('http').Server(app)`, immediately invokes method `Server()` which is in fact exported [here](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L254).  The [definition of ](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L222)[`Server(...)`](https://github.com/nodejs/node/blob/master/lib/_http_server.js#L222) receives in a request listener, which is what Express gave us, so it makes sense we can pass the app variable to it.
 
 The next line, `var io = require('socket.io')(http)`, combines concepts for the two immediately previous lines.  First we require `socket.io` and then immediately call it with a previously obtained variable.  I digressed into this syntax because it tripped me up when I was learning Node.js and Javascript.
 
-The next section of code, `app.get('/',....)`, is simply sending down the `index.html` file when somebody initially visits the root of the site.  The next section of code is where the WebSocket stuff starts.  The `io.on('connection',...)` is waiting for the `'connection'` event to occur.  When it does the inner code will be run. First it will run `console.log('user connected')` so we can have some debug information.  Then it will listen for the `'disconnect'` and `'chat_msg'` events for this particular user's socket connection.  Listening for events gets into the Node.js [EventEmitter](https://nodejs.org/api/events.html) features which we won't be diving into right now.  The `'disconnect'` event simply logs `'user disconnected'` to the console.  The `'chat_msg'` event listener is more significant because it not only receives in a message but also subsequently emits it to all clients that are listening for `'chat_msg'`.
+The next section of code, `app.get('/',....)`, is simply sending down the `index.html` file when somebody initially visits the root of the site.  The next section of code is where the WebSocket stuff starts.  The `io.on('connection',...)` is waiting for the `'connection'` event to occur.  When it does the inner code will be run. First it will run `console.log('user connected')` so we can have some debug information.  Then it will create a listener for the `'disconnect'` and `'chat_msg'` events.  Listening for events gets into the Node.js [EventEmitter](https://nodejs.org/api/events.html) features which we won't be diving into right now.  The `'disconnect'` event simply logs `'user disconnected'` to the console.  The `'chat_msg'` event listener is more significant because it not only receives in a message but also subsequently emits it to all clients that are listening for `'chat_msg'`.
 
 This takes us back to the client code in `index.html`.  Below is the section of code we haven't yet talked about.  Here we see the client waiting for emitted events with an identifier of `'chat_msg'`.  When such a message is emitted the corresponding inline anonymous function will run.  In this case it uses a jQuery selector to obtain references to the `<ul>` with an id of messages and appends a new `<li>` with the chat message sent down from the server.
 
 ```js
+
     client.on('chat_msg', function(msg){
       $('#messages').append($('<li>').text(msg));
     });
@@ -136,7 +139,10 @@ At this point the communication is done and both the client and server go back i
 Your websocket chat application is complete.  Use the below command to start it and kick the tires.  You can even share the URL with a friend and have them join you on the chat!
 
 ```sh
+
 % node index.js
 ```
 
-**That concludes the IBM i Node.js Intro course.**  If you have any questions or comments please send them to [team@litmis.com](mailto:team@litmis.com)
+## That concludes the IBM i Node.js Intro course!
+
+If you have any questions or comments please send them to [team@litmis.com](mailto:team@litmis.com)
