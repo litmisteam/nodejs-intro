@@ -13,3 +13,4 @@
 * [Step 11: Websockets](websockets.md)
 * [Future Topics ](future_topics.md)
 
+Proceed to [Step 1: Litmis Space Configuration](/litmis_space_config.md)
