@@ -168,27 +168,28 @@ h1=title
 
 ```
 
-Here we learn about Pug’s ability to iterate over a result set using the `each` keyword. The results variable was provided by the controller (index.js) and the row variable is occupied with an SQL row at each iteration. LSTNAM and CUSNUM are columns from DB2 table CUSTOMER.
+Here we learn about Pug’s ability to iterate over a result set using the `each` keyword. The results variable was provided by the controller (`index.js`) and the `row` variable is occupied with an SQL row at each iteration. `LSTNAM` and `CUSNUM` are columns from DB2 table `CUSTOMER`.
 
-Next, we need to make changes to index.js that query DB2 to provide the results variable to the customers.pug view, as shown. Note, only changes and additions are being shown in color.
+Next, we need to make changes to `index.js` that query DB2 to provide the results variable to the `customers.pug` view, as shown. 
 
 ```js
 app.get('/customers', function(req, res) {
-  db.exec("SELECT LSTNAM, CUSNUM FROM xxxxx_D.CUSTOMER", function(results) {
+  stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results) {
     res.render('customers', { title: 'Customers', results: results})
   })
 })
 ```
 
-The first parameter of res.render(...) is declaring what view, minus the extension of .pug, to render.  The second parameter is a Javascript object (curly brackets) with variables that will be passed to the UI layer.  Restart your application (Ctrl + C, then node index.js) and you should see the following in your browser.  
+The first parameter of `res.render(...)` is declaring what view, minus the extension of `.pug`, to render.  The second parameter is a Javascript object (curly brackets) with variables that will be passed to the UI layer.  Restart your application (`Ctrl + C`, then run `node index.js`) and you should see the following in your browser.  
 
-**NOTE:** There is now /customers at the end of the URL.
+**NOTE:** There is now `/customers` at the end of the URL.
 
 ![image alt text](img/image_16.png)
 
-Next, let’s introduce a feature of displaying more information about a customer when it’s clicked. We can do that by modifying the td tag holding the CUSNUM value to have a dynamically generated link to that specific customer, as shown. The ${...} syntax is [string interpolation](http://jade-lang.com/reference/interpolation/) and makes referencing variables in strings significantly easier. Also note the indentation needs to be correct number of spaces.
+Next, let’s introduce a feature of displaying more information about a customer when it’s clicked. We can do that by modifying the `td` tag holding the `CUSNUM` value to have a dynamically generated link to that specific customer, as shown. The `${...}` syntax is [string interpolation](http://jade-lang.com/reference/interpolation/) and makes referencing variables in strings significantly easier. Also note the indentation needs to be correct number of spaces.
 
 ```js
+
 h1=title
  table
    thead
@@ -196,7 +197,7 @@ h1=title
        th Last Name
        th Customer Number
    tbody
-     - each row in results
+     each row in results
        tr
          td=row.LSTNAM
          td: a(href=`/customer/${row.CUSNUM}`)=row.CUSNUM
