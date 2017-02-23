@@ -11,11 +11,11 @@ Node.js has already been installed in your Litmis Space so we won't be going ove
 v6.9.1
 ```
 
-As you can see we are running version 4.4.6 of Node.js which is the current version as of this writing.
+As you can see we are running version 6.9.1 of Node.js which is the current version as of this writing.
 
 Sometimes the best way to learn something is to get a quick "win".  In an effort to not disrupt the balance of language introduction we’re going to create a hello world application.
 
-First create a new directory to hold this new application, cd \(change directory\) into it, and touch app.js to create it.
+First create a new directory to hold this new application, cd \(change directory\) into it, and touch `app.js` to create it.
 
 ```
 % mkdir hello
@@ -31,17 +31,11 @@ This will open a new browser tab with the browser-based editor, as shown below. 
 
 ![image alt text](img/image_7.png)
 
-Before we edit `app.js` we need to obtain some system information; specifically the port our web application will be listening to for inbound requests.  Go to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button to obtain the port that is dedicated to your user profile, as shown below.
 
-![image alt text](img/image_8.png)
-
-Then in the pop-up window you should see the below section where the ports are delineated.
-
-![image alt text](img/image_9.png)
 
 Now go to the browser-based editor and paste \(`Ctrl+Shift+V`\) the following into the newly created `app.js` file.  You may need to right click in the directory tree to refresh the list.
 
-**NOTE:** Make sure to change the below port of `60263` to the one obtained in the previous step. Also, make sure to save your source by using `Ctrl+S` or menu `File->Save`.
+**NOTE:** Make sure to save your source by using `Ctrl+S` or menu `File->Save`.
 
 ```js
 var http = require('http')
@@ -68,6 +62,16 @@ As you can see it output the value we placed in the call to console.log\(...\). 
 ![image alt text](img/image_10.png)
 
 **Wow!  That was simple!**
+
+The `process.env.LITMIS\`_`PORT\`_`DEVELOPMENT`line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
+
+![image alt text](img/image_8.png)
+
+Then in the pop-up window you should see the below section where the ports are delineated.
+
+![image alt text](img/image_9.png)
+
+---
 
 For the fun of it let's add a log each time a request is made using the following line of code that is colored.
 
