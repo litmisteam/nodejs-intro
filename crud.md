@@ -84,17 +84,15 @@ Now it's time to make fairly extensive changes to `index.js`.  Below is the enti
 ```js
 
 var db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
-var util = require( "util" )
 var body_parser = require('body-parser')
 var express = require('express')
 var app = express()
  
-db.init()
-db.conn('*LOCAL', function(){
-  db.autoCommit(true)
-})
+const dbconn = new db.dbconn()
+dbconn.conn("*LOCAL")
+const stmt = new db.dbstmt(dbconn)
 
-db.exec(`SET SCHEMA ${process.env.LITMIS_SCHEMA_DEVELOPMENT}`)
+stmt.exec(`SET SCHEMA ${process.env.LITMIS_SCHEMA_DEVELOPMENT}`)
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
