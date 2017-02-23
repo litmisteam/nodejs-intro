@@ -1,15 +1,11 @@
 
 ![](/assets/litmislearn_gitbook_nodejsintro.png)
 
-Made possible by: LITMIS, a [Krengeltech](https://krengeltech.com) brand.
+### Made possible by
+LITMIS, a [Krengeltech](https://krengeltech.com) brand.
 
-On The Web: [litmis.com](http://litmis.com/)
+[litmis.com](http://litmis.com/) | [@litmisteam](https://twitter.com/litmisteam) | [team@litmis.com](mailto:team@litmis.com)
 
-Follow on Twitter: [@litmisteam](https://twitter.com/litmisteam)
-
-Connect via email: [team@litmis.com](mailto:team@litmis.com)
-
-Short URL: [bit.ly/litmislearn-nodejsintro](http://bit.ly/litmislearn-nodejsintro)
 
 # Introduction
 
