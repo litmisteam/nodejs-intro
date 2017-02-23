@@ -3,6 +3,7 @@
 Next, we want to further develop the application by implementing a template engine to simplify the creation of dynamic HTML pages. We’ll use the [pug](https://www.npmjs.com/package/pug) template engine due to its popularity and flexibility. To install pug, we will again go to the `npm install` command.  This time we’ll add a `--save` option at the end to declare we’d like this retained in the `package.json` file.
 
 ```sh
+
 % npm install pug --save
 app1@1.0.0 /home/USRxxxxx/app1                                                  
 `-- pug@2.0.0-beta11
@@ -67,6 +68,7 @@ app1@1.0.0 /home/USRxxxxx/app1
 Using the `cat` command we can see the modified `package.json` file with reference to the `pug` module.
 
 ```sh
+
 % cat package.json 
 {
   "name": "app1",
@@ -96,6 +98,7 @@ Next, we need to create a folder to hold our new template engine files so we can
 Within the `views` directory, create a file named `index.pug` and populate it with the following text, making sure to retain the leading spaces. 
 
 ```html
+
 html
   head
     title!= title
@@ -144,6 +147,7 @@ app.listen(port, function() {
 At this point we’re ready to start the application with the following command. If your application is still running from last time, you’ll need to first end it (i.e., `Ctrl + C`) to pick up the latest changes in index.js.
 
 ```sh
+
 % node index.js
 ```
 
@@ -154,6 +158,7 @@ Below is a screenshot of what you should now be seeing.
 Now that we know how to pass variables to the view layer, let’s make it a bit more dynamic by retrieving database rows to display a list of customers from table `CUSTOMER` that was created earlier. To accomplish this, we’re first going to create a new file named `customers.pug` in the views directory and populate it with the following content.
 
 ```js
+
 h1=title
   table
     thead
@@ -173,6 +178,7 @@ Here we learn about Pug’s ability to iterate over a result set using the `each
 Next, we need to make changes to `index.js` that query DB2 to provide the results variable to the `customers.pug` view, as shown. 
 
 ```js
+
 app.get('/customers', function(req, res) {
   stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results) {
     res.render('customers', { title: 'Customers', results: results})
@@ -203,9 +209,10 @@ h1=title
          td: a(href=`/customer/${row.CUSNUM}`)=row.CUSNUM
 ```
 
-Now we need to add code to index.js to process requests for specific customers, as shown below.  Add this code towards the bottom immediately before we assign the port variable.
+Now we need to add code to `index.js` to process requests for specific customers, as shown below.  Add this code towards the bottom immediately before we assign the port variable.
 
 ```js
+
 app.get('/customer/:id', function(req, res) {
   var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=` + req.params.id
   stmt.exec(sql, function(result, err) {
@@ -214,17 +221,18 @@ app.get('/customer/:id', function(req, res) {
 })
 ```
 
-Note the :id reference in the first parameter of app.get(...). This says that whatever is specified on the URL after /customer/ should be placed into a variable named id within the req.params object. We can then access it with the syntax req.params.id and concatenate it into the SQL statement.  After stmt.exec() is run we get the result *array* object. Then we use result[0] to set the result view variable to the first element in the array.
+Note the :id reference in the first parameter of `app.get(...)`. This says that whatever is specified on the URL after `/customer/` should be placed into a variable named `id` within the `req.params` object. We can then access it with the syntax `req.params.id` and concatenate it into the SQL statement.  After `stmt.exec(...)` is run we get the `result` *array* object. Then we use `result[0]` to set the result view variable to the first element in the array.
 
-NOTE: This SQL statement is open to injection attacks.  Read more [here](https://en.wikipedia.org/wiki/SQL_injection) if you'd like.
+**NOTE:** This SQL statement is open to injection attacks.  Read more [here](https://en.wikipedia.org/wiki/SQL_injection) if you'd like.
 
-Restarting your application and navigating to /customers should reveal the results shown below.  Notice how the customer number is now a link.
+Restarting your application and navigating to `/customers` should reveal the results shown below.  Notice how the customer number is now a link.
 
 ![image alt text](img/image_17.png)
 
-Next, create a customer.pug file in the views directory to facilitate the previous res.render('customer', ...), as shown below. Note that this view was singular and the other one was plural (customer.pug vs. customers.pug) as that’s a common convention.
+Next, create a `customer.pug` file in the `views` directory to facilitate the previous `res.render('customer', ...)`, as shown below. Note that this view was singular and the other one was plural (`customer.pug` vs. `customers.pug`) as that’s a common convention.
 
 ```js
+
 h1=title
 table
   tr
@@ -245,6 +253,8 @@ table
 a(href='/customers') Back
 ```
 
-Restart the application, go to the /customers page and click on a customer. You should see a page similar to the below.
+Restart the application, go to the `/customers` page and click on a customer. You should see a page similar to the below.
 
 ![image alt text](img/image_18.png)
+
+## Please proceed to the next step

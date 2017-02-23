@@ -2,11 +2,12 @@
 
 Now it's time to make this application have full CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) capabilities. 
 
-In the previous section we created a views directory and placed index.pug (home page), customers.pug (customer listing) and customer.pug (show a single customer) in it. To better organize for application growth, we will create directory views/customers and rename customers.pug to index.pug and customer.pug to show.pug, and put them both in this new directory.  I've laid out the commands necessary to accomplish this task below.
+In the previous section we created a `views` directory and placed `index.pug` (home page), `customers.pug` (customer listing) and `customer.pug` (show a single customer) in it. To better organize for application growth, we will create directory `views/customers` and rename `customers.pug` to `index.pug` and `customer.pug` to `show.pug`, and put them both in this new directory.  I've laid out the commands necessary to accomplish this task below.
 
-**NOTE:** The pwd command prints your working directory so you know where you are in the file system.
+**NOTE:** The `pwd` command prints your working directory so you know where you are in the file system.
 
 ```sh
+
 % pwd
 /home/USRxxxxx/app1
 % mkdir views/customers
@@ -14,28 +15,31 @@ In the previous section we created a views directory and placed index.pug (home 
 % mv views/customer.pug views/customers/show.pug
 ```
 
-Since we’re adding create and update capabilities to the application, we need to compose some new view files, specifically views/customers/new.pug and views/customers/edit.pug.
+Since we’re adding create and update capabilities to the application, we need to compose some new view files, specifically `views/customers/new.pug` and `views/customers/edit.pug`.
 
-Below is the content for new.pug.
+Below is the content for `new.pug`.
 
 ```js
+
 h1 New Customer
 include _form
 a(href='/customers') Back
 ```
 
-Below is the content for edit.pug.
+Below is the content for `edit.pug`.
 
 ```js
+
 h1 Edit Customer
 include _form
 a(href='/customers') Back
 ```
 
-Notice the include _form portion. This is bringing in what's called a "partial" named _form.pug, which also needs to exist in the views/customers directory.  Partials are similar to doing a /COPY in RPG to bring in an external sub routine or procedure.  Create the file views/customers/_form.pug and occupy it with the below content.
+Notice the `include _form` portion. This is bringing in what's called a "partial" named `_form.pug`, which also needs to be created in the `views/customers` directory.  Partials are similar to doing a `/COPY` in RPG to bring in an external sub routine or procedure.  Create the file `views/customers/_form.pug` and occupy it with the below content.
 
 
 ```js
+
 form(method="post",action=form_action)
   p CUSNUM: 
     input(type="number", name="CUSNUM", value=result.CUSNUM)
@@ -49,11 +53,12 @@ form(method="post",action=form_action)
     button(type="submit") submit
 ```
 
-When specifying include you don't need to specify the .pug extension. Also, view files prefixed with underscores denote they are partials. This partial will be used for both new and edit scenarios, which is why we modularized it into a partial. More on this later when we get to the controller code in index.js.
+When specifying `include` you don't need to specify the `.pug` extension. Also, view files prefixed with underscores denote they are partials (it's a naming convention). This partial will be used for both new and edit scenarios, which is why we modularized it into a partial. More on this later when we get to the controller code in `index.js`.
 
-The last view layer change is to views/customers/index.pug, as shown below with the lines that are black.
+The last view layer change is to `views/customers/index.pug`, as shown.
 
 ```js
+
 a(href='/customers/new') New Customer 
 h1=title
   table
@@ -64,7 +69,7 @@ h1=title
         th
         th
     tbody
-      - each row in results
+      each row in results
         tr
           td=row.LSTNAM
           td: a(href=`/customers/${row.CUSNUM}`)=row.CUSNUM  
@@ -72,11 +77,12 @@ h1=title
           td: a(href=`/customers/${row.CUSNUM}/delete`) delete
 ```
 
-Links to "New Customer," "edit", and "delete" have been added. Notice how the "New Customer" link doesn't have reference to a particular customer and "edit"/"delete" does (i.e., row.CUSNUM). By specifying row.CUSNUM we turn the URL into something similar to an RPG CHAIN, allowing the index.js controller code to know which row in the database should be acted upon.
+Links to "New Customer," "edit", and "delete" have been added. Notice how the "New Customer" link doesn't have a reference to a particular customer and "edit"/"delete" does (i.e., `row.CUSNUM`). By specifying `row.CUSNUM` we turn the URL into something similar to an RPG CHAIN, allowing the `index.js` controller code to know which row in the database should be acted upon.
 
-Below is the entirety of the index.js file that has the changes/additions in color.  Make sure to replace xxxxx_D with your schema name.  Next we will dive into the changes.
+Now it's time to make fairly extensive changes to `index.js`.  Below is the entirety of the `index.js` file.  Review them and then read on to learn what the new sections accomplish.
 
 ```js
+
 var db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
 var util = require( "util" )
 var body_parser = require('body-parser')
@@ -88,7 +94,7 @@ db.conn('*LOCAL', function(){
   db.autoCommit(true)
 })
 
-db.exec("SET SCHEMA xxxxx_D")
+db.exec(`SET SCHEMA ${process.env.LITMIS_SCHEMA_DEVELOPMENT}`)
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
@@ -100,7 +106,7 @@ app.get('/', function(req, res) {
 })
  
 app.get('/customers', function(req, res) {
- db.exec("SELECT LSTNAM, CUSNUM FROM CUSTOMER", function(results) {
+ stmt.exec(`SELECT LSTNAM, CUSNUM FROM CUSTOMER`, function(results) {
     res.render('customers/index', { title: 'Customers', results: results})
   })
 })
@@ -110,24 +116,22 @@ app.get('/customers/new', function(req, res) {
 })
 
 app.post('/customers/create', function(req, res) {
-  var sql = util.format(
-    "INSERT INTO CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES ('%s', '%s', '%s', '%s')",
-    req.body.CUSNUM, req.body.LSTNAM, req.body.INIT, req.body.STREET
-  )
-  db.exec(sql)
+  var sql = 
+    `INSERT INTO CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES (${req.body.CUSNUM}, '${req.body.LSTNAM}', '${req.body.INIT}', '${req.body.STREET}')`
+  stmt.exec(sql)
   res.redirect('/customers')
 })
 
 app.get('/customer/:id', function(req, res) {
- var sql = "SELECT * FROM CUSTOMER WHERE CUSNUM=" + req.params.id
- db.exec(sql, function(result) {
+ var sql = `SELECT * FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
+ stmt.exec(sql, function(result) {
    res.render('customers/show', { title: 'Customer', result: result[0]})
  })
 })
 
 app.get('/customers/:id/edit', function(req, res) {
-  var sql = util.format("SELECT * FROM CUSTOMER WHERE CUSNUM=%s", req.params.id)
-  db.exec(sql, function(result) {
+  var sql = `SELECT * FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(result) {
     res.render('customers/edit',
       { title: 'Customer',
         result: result[0],
@@ -138,21 +142,19 @@ app.get('/customers/:id/edit', function(req, res) {
 })
 
 app.post('/customers/:id/update', function(req, res) {
-  var sql = util.format(
-    "UPDATE CUSTOMER SET CUSNUM='%s',LSTNAM='%s',INIT='%s',STREET='%s' WHERE CUSNUM='%s'",
-    req.body.CUSNUM, req.body.LSTNAM, req.body.INIT, req.body.STREET, req.body.CUSNUM
-  )
-  db.exec(sql)
+  var sql = 
+    `UPDATE CUSTOMER SET CUSNUM=${req.body.CUSNUM},LSTNAM='${req.body.LSTNAM}',INIT='${req.body.INIT}',STREET='${req.body.STREET}' WHERE CUSNUM='${req.body.CUSNUM}`
+  stmt.exec(sql)
   res.redirect('/customers')
 })
 
 app.get('/customers/:id/delete', function(req, res) {
-  var sql = util.format("DELETE FROM CUSTOMER WHERE CUSNUM='%s'", req.params.id)
-  db.exec(sql)
+  var sql = `DELETE FROM CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql)
   res.redirect('/customers')
 })
 
-var port = process.env.PORT || 60263
+var port = process.env.PORT || process.env.LITMIS_PORT_DEVELOPMENT
 app.listen(port, function() {
   console.log('Running on port %d', port)
 })
