@@ -1,6 +1,5 @@
-![](/assets/nodejs_transparent2.png)
 
-
+![](/assets/litmislearn_gitbook_nodejsintro.png)
 
 Made possible by: LITMIS, a [Krengeltech](https://krengeltech.com) brand.
 
