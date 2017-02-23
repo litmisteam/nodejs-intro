@@ -1,6 +1,6 @@
-# Step 10: The View Layer
+# Step 9: The View Layer
 
-Next, we want to further develop the application by implementing a template engine to simplify the creation of dynamic HTML pages. We’ll use the [pug](https://www.npmjs.com/package/pug) template engine due to its popularity and flexibility. To install pug, we will again go to the npm install command.  This time we’ll add a --save option at the end to declare we’d like this retained in the package.json file.
+Next, we want to further develop the application by implementing a template engine to simplify the creation of dynamic HTML pages. We’ll use the [pug](https://www.npmjs.com/package/pug) template engine due to its popularity and flexibility. To install pug, we will again go to the `npm install` command.  This time we’ll add a `--save` option at the end to declare we’d like this retained in the `package.json` file.
 
 ```sh
 % npm install pug --save
@@ -64,7 +64,7 @@ app1@1.0.0 /home/USRxxxxx/app1
   `-- pug-strip-comments@1.0.2
 ```
 
-Using the cat command we can see the modified package.json file with reference to the Jade module.
+Using the `cat` command we can see the modified `package.json` file with reference to the `pug` module.
 
 ```sh
 % cat package.json 
@@ -85,7 +85,7 @@ Using the cat command we can see the modified package.json file with reference t
 }
 ```
 
-Next, we need to create a folder to hold our new template engine files so we can keep them separate and organized from the rest of the application. Run the following mkdir command to create a directory named views.
+Next, we need to create a folder to hold our new template engine files so we can keep them separate and organized from the rest of the application. Run the following `mkdir` command to create a directory named `views`.
 
 ```sh
 % mkdir views
@@ -93,7 +93,7 @@ Next, we need to create a folder to hold our new template engine files so we can
 
 **NOTE:** In the browser-based code editor you can right click on the root folder and select "Refresh" to see any files or folders you've created from the shell.
 
-Within the views directory, create a file named index.jade and populate it with the following text, making sure to retain the leading spaces. 
+Within the `views` directory, create a file named `index.pug` and populate it with the following text, making sure to retain the leading spaces. 
 
 ```html
 html
@@ -103,19 +103,20 @@ html
     h1!= message
 ```
 
-What you see is Pug syntax that aims to make HTML composition significantly less "noisy" (i.e., more whitespace). Indentation in Pug allows us to declare when closing tags should be assumptively inserted. For example, the head tag will close when the body tag is encountered because they’re at the same indentation depth (two spaces).
+What you see is Pug syntax that aims to make HTML composition significantly less "noisy". Indentation in Pug allows us to declare when closing tags should be assumptively inserted. For example, the head tag will close when the body tag is encountered because they’re at the same indentation depth (two spaces).
 
 When you see an equal sign (=), or exclamation plus equal sign (!=), it means the content on the right is a variable made available to the view from the controller. There are many more aspects you can learn about in the [Pug reference](https://pugjs.org/api/reference.html).
 
-Below are the necessary Pug additions for views to work in index.js. First, we use `app.set(...)` to declare the directory where views are stored and then set the view engine to 'pug'. Once the view engine is set, we can alter the contents of `app.get(...)` to invoke `res.render()`, passing the name of the view (index) and set named variables we want to pass to the view—namely title and message.
+Below are the necessary Pug additions for views to work in `index.js.` First, we use `app.set(...)` to declare the directory where views are stored and then set the view engine to 'pug'. Once the view engine is set, we can alter the contents of `app.get(...)` to invoke `res.render()`, passing the name of the view (`index`) and set named variables we want to pass to the view — namely title and message.
 
 ```js
+
 const db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
 
 const dbconn = new db.dbconn()
 dbconn.conn("*LOCAL")
 const stmt = new db.dbstmt(dbconn)
-const schema = 'ED0ZS_D'
+const schema = process.env.LITMIS_SCHEMA_DEVELOPMENT
  
 var express = require('express')
 var app = express()
@@ -134,7 +135,7 @@ app.get('/', function(req, res) {
 })
 
 
-var port = process.env.PORT || 62453
+var port = process.env.PORT || process.env.LITMIS_PORT_DEVELOPMENT
 app.listen(port, function() {
   console.log('Running on port %d', port)
 })
@@ -150,7 +151,7 @@ Below is a screenshot of what you should now be seeing.
 
 ![image alt text](img/image_15.png)
 
-Now that we know how to pass variables to the view layer, let’s make it a bit more dynamic by retrieving database rows to display a list of customers from table CUSTOMER that was created earlier. To accomplish this, we’re first going to create a new file named customers.pug in the views directory and populate it with the following content.
+Now that we know how to pass variables to the view layer, let’s make it a bit more dynamic by retrieving database rows to display a list of customers from table `CUSTOMER` that was created earlier. To accomplish this, we’re first going to create a new file named `customers.pug` in the views directory and populate it with the following content.
 
 ```js
 h1=title
@@ -167,7 +168,7 @@ h1=title
 
 ```
 
-Here we learn about Pug’s ability to iterate over a result set using the each keyword. The results variable was provided by the controller (index.js) and the row variable is occupied with an SQL row at each iteration. LSTNAM and CUSNUM are columns from DB2 table CUSTOMER.
+Here we learn about Pug’s ability to iterate over a result set using the `each` keyword. The results variable was provided by the controller (index.js) and the row variable is occupied with an SQL row at each iteration. LSTNAM and CUSNUM are columns from DB2 table CUSTOMER.
 
 Next, we need to make changes to index.js that query DB2 to provide the results variable to the customers.pug view, as shown. Note, only changes and additions are being shown in color.
 

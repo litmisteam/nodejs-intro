@@ -49,5 +49,4 @@ export LITMIS_PORT_TEST=22222
 export LITMIS_PORT_PRODUCTION=33333
 ```
 
-
-
+## Proceed to the next step

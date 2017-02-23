@@ -41,7 +41,7 @@ var port = process.env.LITMIS_PORT_DEVELOPMENT
 
 http.createServer(function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'})
-  res.end('Hello World\n')
+  res.end('Hello World')
 }).listen(port, '0.0.0.0')
 
 console.log('Server running at http://0.0.0.0:%d', port)
@@ -55,15 +55,13 @@ Now go back to your console and enter the following command to start your applic
 Server running at http://0.0.0.0:60263
 ```
 
-As you can see it output the value we placed in the call to console.log\(...\).  Now open a new tab in your browser and enter `spaces.litmis.com:<your-port>`. You should see the below screenshot.
+As you can see it output the value we placed in the call to `console.log\(...\)`.  Now open a new tab in your browser and enter `spaces.litmis.com:<your-port>`. Replace "<your-port>" with the value you see in the console, `60263` in my case, though yours will be different. You should see the below screenshot.
 
 ![image alt text](img/image_10.png)
 
 **Wow!  That was simple!**
 
 The `process.env.LITMIS_PORT_DEVELOPMENT` line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
-
-`LITMIS_PORT_DEVELOPMENT`
 
 ![image alt text](img/image_8.png)
 
@@ -76,11 +74,12 @@ Then in the pop-up window you should see the below section where the ports are d
 For the fun of it let's add a log each time a request is made using the following line of code that is colored.
 
 ```js
+
 var http = require('http')
-var port = 60263
+var port = process.env.LITMIS_PORT_DEVELOPMENT
 http.createServer(function(req, res) {
  res.writeHead(200, {'Content-Type': 'text/plain'})
- res.end('Hello World**\n**')
+ res.end('Hello World')
  console.log('Request came in at: ' + new Date())
 }).listen(port, '0.0.0.0')
 
@@ -99,3 +98,4 @@ Request came in at: Mon Feb 22 2016 21:53:59 GMT+0000 (EST)
 
 Refresh the hello world browser tab a few times and you should see additional log lines in the console with timestamps.
 
+## Proceed to the next step

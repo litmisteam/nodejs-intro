@@ -1,4 +1,4 @@
-# Step 7: npm, The Package Manager
+# Step 5: npm, The Package Manager
 
 Node.js has what's called a "package manager." Wikipedia.org gives the following definition to package managers:
 
@@ -110,7 +110,7 @@ app.get('/', function(req, res) {
   res.send('Hello World!');
 })
 
-var port = process.env.PORT || 60263
+var port = process.env.PORT || process.env.LITMIS_PORT_DEVELOPMENT
 app.listen(port, function() {
   console.log('Running on port %d', port)
 })
@@ -120,7 +120,7 @@ This is another hello world example using Express instead of going direct to the
 
 Line 2 is obtaining a reference to the Express application object which is subsequently used on line 4 to listen for the "root route".  A "route" is a path from the browser to code in your Node.js application.  In this case we have a single route \(i.e. `'/'`\) defined so when we bring up the root of the website it will display **"Hello World!"**.
 
-On line 8 we occupy the port variable.  The double vertical pipe syntax \(`||`\) is the _or_ operator which will first check whether `process.env.PORT` has a value.  If not, it will occupy it with the value to the right of the vertical pipes \(i.e. `60263`\).  The `process.env` object gives us access to environment variables from the current process \(aka IBM i job\).  What this means is an overriding port can be passed when starting the application, as shown below.  Go ahead and try running your app on the various ports dedicated to your profile.  
+On line 8 we occupy the port variable, though it is slightly different this time.  The double vertical pipe syntax \(`||`\) is the _or_ operator which will first check whether `process.env.PORT` has a value.  If not, it will occupy it with the value to the right of the vertical pipes \(i.e. `LITMIS_PORT_DEVELOPMENT`\).  The `process.env` object gives us access to environment variables from the current process \(aka IBM i job\).  What this means is an overriding port can be passed when starting the application, as shown below.  Go ahead and try running your app on the various ports dedicated to your profile.  
 
 **Reminder:** Your ports are located in the Space information pop-up \(the 'i' button\).
 
@@ -129,11 +129,11 @@ On line 8 we occupy the port variable.  The double vertical pipe syntax \(`||`\)
 Running on port 60263
 ```
 
-Notice how `PORT=60263` is specified _before_ the node `index.js` portion.  This is valid syntax and is basically setting the `PORT` environment variable for only the duration of this particular call to the node binary.  If you wanted to have the `PORT` environment variable to be set at the process \(aka IBM i job\) level then you'd use export `PORT=602604`.
+Notice how `PORT=60263` is specified _before_ the node `index.js` portion.  This is valid syntax and is basically setting the `PORT` environment variable for only the duration of this particular call to the node binary.  If you wanted to have the `PORT` environment variable to be set at the process \(aka IBM i job\) level then you'd use `export PORT=602604`.
 
 Go ahead and open a browser window to see your Express hello world app running, as shown below.
 
 ![image alt text](img/image_13.png)
 
-Going back to the `index.js code`, lines 4 and 9 have what's called an "**inline anonymous function"**.  These are _all over the place_ in Node.js.  An understanding of them is essential to adequately write applications in Node.js.  Before going further it would be good to learn more about Javascript functions.
+## Proceed to the next step
 

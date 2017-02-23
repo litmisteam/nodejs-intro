@@ -1,4 +1,4 @@
-# Step 11: Creating CRUD
+# Step 10: Creating CRUD
 
 Now it's time to make this application have full CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) capabilities. 
 
