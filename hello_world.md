@@ -61,7 +61,9 @@ As you can see it output the value we placed in the call to console.log\(...\). 
 
 **Wow!  That was simple!**
 
-The `process.env.LITMIS\_PORT\_DEVELOPMENT`line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
+The `process.env.LITMIS\_PORT\_DEVELOPMENT` line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
+
+`LITMIS`_`PORT`_`DEVELOPMENT`
 
 ![image alt text](img/image_8.png)
 
