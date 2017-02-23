@@ -31,8 +31,6 @@ This will open a new browser tab with the browser-based editor, as shown below. 
 
 ![image alt text](img/image_7.png)
 
-
-
 Now go to the browser-based editor and paste \(`Ctrl+Shift+V`\) the following into the newly created `app.js` file.  You may need to right click in the directory tree to refresh the list.
 
 **NOTE:** Make sure to save your source by using `Ctrl+S` or menu `File->Save`.
@@ -63,7 +61,7 @@ As you can see it output the value we placed in the call to console.log\(...\). 
 
 **Wow!  That was simple!**
 
-The `process.env.LITMIS\`_`PORT\`_`DEVELOPMENT`line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
+The `process.env.LITMIS\_PORT\_DEVELOPMENT`line is accessing an environment variable that contains a port that has been allocated to your user profile.  You can learn more about these values by going to your [Spaces page](https://spaces.litmis.com/workspaces) and select the information button, as shown below.
 
 ![image alt text](img/image_8.png)
 
