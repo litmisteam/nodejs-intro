@@ -10,6 +10,8 @@ Once inside a REPL you can enter other Node.js \(and Javascript\) statements.  S
 
 Taking that example further, you can actually paste (`Ctrl+Shift+V`) the entire contents of the `hello/app.js` program into a Node.js REPL and it will execute all the code and run your web app, as shown below.
 
+NOTE: The below is the output of pasting the contents from `hello/app.js` into a REPL session.  Don't paste the below into a REPL session.
+
 ```sh
 % node                                                        
 > var http = require('http')                                                    
