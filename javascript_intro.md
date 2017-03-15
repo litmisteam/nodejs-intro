@@ -10,7 +10,7 @@ Javascript has some phenomenal capabilities when it comes to running code concur
 
 ### Dynamic Types
 
-Javascript has dynamic types.  This means a couple things.  First, you don't declare a datatype when you declare a variable.  Instead, a variable gets its data type when it is first assigned.  Not only that, but a Javascript variable can have its data type changed simply by placing a different value in it.  To test this concept paste the below code into a REPL session \(type node in the shell and press the Enter key\).
+Javascript has dynamic types.  This means a couple things.  First, you don't declare a datatype when you declare a variable.  Instead, a variable gets its data type when it is first assigned.  Not only that, but a Javascript variable can have its data type changed simply by placing a different value in it.  To test this concept paste the below code into a REPL session \(type `node` in the shell and press the `Enter` key to start a REPL session\).
 
 ```js
 var x
@@ -33,6 +33,8 @@ typeof x
 The first line is declaring a variable of `x`.  Then the [`typeof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) operator conveys the current data type of the variable.  The subsequent lines are all setting the variable to a different data type and then using typeof to display the change.
 
 You should see results in your console similar to the following after pasting into the REPL.
+
+**NOTE:** The below is output, not something you should copy and paste into the Node.js REPL sesison.
 
 ```sh
 % node
