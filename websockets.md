@@ -145,4 +145,6 @@ Your websocket chat application is complete.  Use the below command to start it 
 
 ## That concludes the IBM i Node.js Intro course!
 
+## Don't forget to log out of your email account if you used that for signing up!
+
 If you have any questions or comments please send them to [team@litmis.com](mailto:team@litmis.com)
