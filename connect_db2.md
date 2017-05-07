@@ -50,7 +50,9 @@ The first line is a fully qualified path to where the `db2a.js` file lives in th
 
 The `stmt.exec(...)` lines are where the action happens.  You'll notice the `stmt.exec` functions are inside each other.  This is because we need to make sure the next SQL statement doesn't start before the current one completes. If this seems odd then you are in good company because it is very different than how other programming languages work. With this you can see how Javascript's asynchronous processing is a first class citizen.  If the `stmt.exec` statements were one after each other then that would mean they would be invoked concurrently.  That would obviously be an issue in this case because we can't `INSERT` a row before the `CREATE TABLE` is complete.  
 
-The third query of `systables` is performed so we can learn whether the `CREATE TABLE` was successful.  You should see output similar to the following.  Note I have formatted the below output so it is easier to decipher.
+The third query of `systables` is performed so we can learn whether the `CREATE TABLE` was successful.  You should see output similar to the following.  I have formatted the below output so it is easier to decipher.
+
+**Side Note:** If you see `error: undefined` or similar in your console that means there wasn't an error specified in the error return field.
 
 ```
 [ { TABLE_NAME: 'CUSTOMER',
