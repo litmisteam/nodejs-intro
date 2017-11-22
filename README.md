@@ -1,11 +1,8 @@
 
-![](/assets/litmislearn_gitbook_nodejsintro.png)
+![](/assets/nodejs-intro-to.png)
 
-
-![](/assets/LitmisSpaces-Made-Possible.png)
-
-### Made possible by
-LITMIS, a [Krengeltech](https://krengeltech.com) brand.
+# Sponsor
+![](/assets/LS-possible-prices.png)
 
 [litmis.com](http://litmis.com/) | [@litmisteam](https://twitter.com/litmisteam) | [team@litmis.com](mailto:team@litmis.com)
 
