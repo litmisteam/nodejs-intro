@@ -1,6 +1,6 @@
-# Table of contents
+# Summary
 
-* [Introduction](README.md)
+* [Introduction](./)
 * [Summary](summary.md)
 * [Step 1: Litmis Space Configuration](step-1-litmis-space-configuration.md)
 * [Step 2: Hello World!](step-2-hello-world.md)
@@ -11,5 +11,7 @@
 * [Step 9: The View Layer](step-9-the-view-layer.md)
 * [Step 10: Creating CRUD](step-10-creating-crud.md)
 * [Step 11: Websockets](step-11-websockets.md)
-* [Future Topics](future-topics.md)
+* [Future Topics ](future-topics.md)
+
+Proceed to [Step 1: Litmis Space Configuration](step-1-litmis-space-configuration.md)
 
