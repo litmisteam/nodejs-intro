@@ -93,12 +93,14 @@ app.set('view engine', 'pug')
 app.use(body_parser.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
- res.render('index', { title: 'Hey', message: 'Hey Jade!'})
+  res.render('index', { title: 'Hey', message: 'Hey Jade!'})
 })
 
 app.get('/customers', function(req, res) {
- stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results, err) {
-   res.render('customers/index', { title: 'Customers', results: results})
+  let stmt = new db.dbstmt(dbconn)
+  stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results, err) {
+    res.render('customers/index', { title: 'Customers', results: results})
+    stmt.close()
   })
 })
 
@@ -107,21 +109,26 @@ app.get('/customers/new', function(req, res) {
 })
 
 app.post('/customers/create', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   var sql = 
     `INSERT INTO ${schema}.CUSTOMER (CUSNUM,LSTNAM,INIT,STREET) VALUES (${req.body.CUSNUM}, '${req.body.LSTNAM}', '${req.body.INIT}', '${req.body.STREET}')`
   stmt.exec(sql, function(result, err){
     res.redirect('/customers')
+    stmt.close()
   })
 })
 
 app.get('/customers/:id', function(req, res) {
- var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
- stmt.exec(sql, function(result, err) {
-   res.render('customers/show', { title: 'Customer', result: result[0]})
- })
+  let stmt = new db.dbstmt(dbconn)
+  var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
+  stmt.exec(sql, function(result, err) {
+    res.render('customers/show', { title: 'Customer', result: result[0]})
+    stmt.close()
+  })
 })
 
 app.get('/customers/:id/edit', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
   stmt.exec(sql, function(result, err) {
     res.render('customers/edit',
@@ -130,21 +137,26 @@ app.get('/customers/:id/edit', function(req, res) {
         form_action: `/customers/${req.params.id}/update`
       }
     )
+    stmt.close()
   })
 })
 
 app.post('/customers/:id/update', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   var sql = 
     `UPDATE ${schema}.CUSTOMER SET CUSNUM=${req.body.CUSNUM},LSTNAM='${req.body.LSTNAM}',INIT='${req.body.INIT}',STREET='${req.body.STREET}' WHERE CUSNUM=${req.body.CUSNUM}`
   stmt.exec(sql, function(result, err){
     res.redirect('/customers')
+    stmt.close()
   })
 })
 
 app.get('/customers/:id/delete', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   var sql = `DELETE FROM ${schema}.CUSTOMER WHERE CUSNUM=${req.params.id}`
   stmt.exec(sql, function(results, err){
     res.redirect('/customers')  
+    stmt.close()
   })
 })
 
