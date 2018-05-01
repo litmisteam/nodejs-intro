@@ -185,7 +185,7 @@ The first parameter of `res.render(...)` is declaring what view, minus the exten
 
 ![image alt text](.gitbook/assets/image_16.png)
 
-Next, let’s introduce a feature of displaying more information about a customer when it’s clicked. We can do that by modifying the `td` tag holding the `CUSNUM` value to have a dynamically generated link to that specific customer, as shown. The `${...}` syntax is [string interpolation](http://jade-lang.com/reference/interpolation/) and makes referencing variables in strings significantly easier. Also note the indentation needs to be correct number of spaces.
+Next, let’s introduce a feature of displaying more information about a customer when it’s clicked. We can do that by modifying the `td` tag holding the `CUSNUM` value to have a dynamically generated link to that specific customer, as shown. The `${...}` syntax is [string interpolation](http://jade-lang.com/reference/interpolation/) and makes referencing variables in strings significantly easier.
 
 ```javascript
 h1=title
