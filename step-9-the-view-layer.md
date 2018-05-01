@@ -189,25 +189,27 @@ Next, let’s introduce a feature of displaying more information about a custome
 
 ```javascript
 h1=title
- table
-   thead
-     tr
-       th Last Name
-       th Customer Number
-   tbody
-     each row in results
-       tr
-         td=row.LSTNAM
-         td: a(href=`/customer/${row.CUSNUM}`)=row.CUSNUM
+  table
+    thead
+      tr
+        th Last Name
+        th Customer Number
+    tbody
+      each row in results
+        tr
+          td=row.LSTNAM
+          td: a(href=`/customer/${row.CUSNUM}`)=row.CUSNUM
 ```
 
 Now we need to add code to `index.js` to process requests for specific customers, as shown below. Add this code towards the bottom immediately before we assign the port variable.
 
 ```javascript
 app.get('/customer/:id', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   var sql = `SELECT * FROM ${schema}.CUSTOMER WHERE CUSNUM=` + req.params.id
   stmt.exec(sql, function(result, err) {
     res.render('customer', { title: 'Customer', result: result[0]})
+    stmt.close()
   })
 })
 ```
