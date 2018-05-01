@@ -101,8 +101,10 @@ var express = require('express')
 var app = express()
 
 app.get('/', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   stmt.exec(`SELECT * FROM ${schema}.CUSTOMER`, function(results, err) {
    res.json(results)
+   stmt.close()
   })
 })
 
