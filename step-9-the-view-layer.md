@@ -114,7 +114,6 @@ const db = require('/QOpenSys/QIBM/ProdData/OPS/Node6/os400/db2i/lib/db2a')
 
 const dbconn = new db.dbconn()
 dbconn.conn("*LOCAL")
-const stmt = new db.dbstmt(dbconn)
 const schema = process.env.LITMIS_SCHEMA_DEVELOPMENT
 
 var express = require('express')
@@ -128,8 +127,10 @@ app.get('/', function(req, res) {
 })
 
 app.get('/', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   stmt.exec(`SELECT * FROM ${schema}.CUSTOMER`, function(results, err) {
    res.json(results)
+   stmt.close()
   })
 })
 
