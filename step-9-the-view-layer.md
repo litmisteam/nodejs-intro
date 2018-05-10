@@ -173,6 +173,7 @@ Next, we need to make changes to `index.js` that query DB2 to provide the result
 
 ```javascript
 app.get('/customers', function(req, res) {
+  let stmt = new db.dbstmt(dbconn)
   stmt.exec(`SELECT LSTNAM, CUSNUM FROM ${schema}.CUSTOMER`, function(results) {
     res.render('customers', { title: 'Customers', results: results})
   })
