@@ -1,4 +1,4 @@
-# Step 8: Connecting to DB2
+# Step 6: Connecting to DB2
 
 Connecting to DB2 from Node.js is very straight forward. We don't need to run `npm install` because IBM delivers a [DB2 adapter/driver](http://bit.ly/nodejs_db2foriaccess) with Node.js. The DB2 adapter/driver doesn't actually exist on npmjs.com so it couldn't be installed in that fashion anyway.
 

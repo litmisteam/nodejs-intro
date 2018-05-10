@@ -1,4 +1,4 @@
-# Step 11: Websockets
+# Step 9: Websockets
 
 Now it's time to use HTML5's WebSockets.
 

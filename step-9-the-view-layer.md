@@ -1,4 +1,4 @@
-# Step 9: The View Layer
+# Step 7: The View Layer
 
 Next, we want to further develop the application by implementing a template engine to simplify the creation of dynamic HTML pages. We’ll use the [pug](https://www.npmjs.com/package/pug) template engine due to its popularity and flexibility. To install pug, we will again go to the `npm install` command. This time we’ll add a `--save` option at the end to declare we’d like this retained in the `package.json` file.
 
