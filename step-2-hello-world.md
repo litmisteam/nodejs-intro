@@ -71,7 +71,7 @@ Then in the pop-up window you should see the below section where the ports are d
 
 ![image alt text](.gitbook/assets/image_9.png)
 
-For the fun of it let's add a log each time a request is made using the following line of code that is colored.
+For the fun of it let's add a log each time a request is made.  Insert the console.log as shown on line 6.
 
 ```javascript
 var http = require('http')
