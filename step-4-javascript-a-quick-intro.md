@@ -14,19 +14,12 @@ Javascript has dynamic types. This means a couple things. First, you don't decla
 
 ```javascript
 var x
-
 typeof x
-
 x = 4
-
 typeof x
-
 x = "Harry"
-
 typeof x
-
 x = true
-
 typeof x
 ```
 
