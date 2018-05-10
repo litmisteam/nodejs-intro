@@ -87,7 +87,7 @@ Next in index.html's Javascript we have the following code.
 
 This is jQuery. The `$('form')` is what's called a selector. This will obtain a reference to the aforementioned `<form>` and add a `submit(...)` listener. When the form is submitted \(when the user hits the Enter key\) the inline anonymous function code will be run. The call to `client.emit(...)` is sending \(emitting\) a communication to the server. The `$('#m').val()` is another jQuery selector. When a \# symbol is included then jQuery will look for a tag with that id. In this case it is the `<input>` tag. Once a reference to the field is obtained the `.val()` method is invoked to obtain its value. The next line is _setting_ the value to blanks so it is ready for the next message from the user.
 
-To maintain flow order we will hold off talking about the last bit of Javascript on the client and instead look at the server portion. Below is the content of index.js. 
+To maintain flow order we will hold off talking about the last bit of Javascript on the client and instead look at the server portion. Below is the content of `index.js`. 
 
 ```javascript
 var app  = require('express')()
