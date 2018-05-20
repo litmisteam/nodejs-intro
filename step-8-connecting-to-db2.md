@@ -25,7 +25,6 @@ STATE CHAR(2),                   \
 ZIPCOD NUMERIC(5, 0)             \
 )`
 stmt.exec(sql, function(result, err){
-  console.log('error:' + err)
   console.log('result:' + result)
 
   sql = `INSERT INTO ${schema}.CUSTOMER VALUES (123,'Smith','L','123 Center','Mankato','MN',56001)`
