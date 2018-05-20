@@ -30,12 +30,10 @@ stmt.exec(sql, function(result, err){
 
   sql = `INSERT INTO ${schema}.CUSTOMER VALUES (123,'Smith','L','123 Center','Mankato','MN',56001)`
   stmt.exec(sql, function(result,err){
-    console.log('error:' + err)
     console.log('result:' + result)
 
     sql = `select * from ${schema}.systables WHERE TABLE_TYPE='T'`
     stmt.exec(sql, function(result,err) {
-      console.log('error:' + err)
       console.log('result:' + JSON.stringify(result))
     })
   })
