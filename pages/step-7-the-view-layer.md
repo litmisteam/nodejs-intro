@@ -149,7 +149,7 @@ At this point we’re ready to start the application with the following command.
 
 Below is a screenshot of what you should now be seeing.
 
-![image alt text](.gitbook/assets/image_15.png)
+![image alt text](../img/image_15.png)
 
 Now that we know how to pass variables to the view layer, let’s make it a bit more dynamic by retrieving database rows to display a list of customers from table `CUSTOMER` that was created earlier. To accomplish this, we’re first going to create a new file named `customers.pug` in the views directory and populate it with the following content.
 
@@ -184,7 +184,7 @@ The first parameter of `res.render(...)` is declaring what view, minus the exten
 
 **NOTE:** There is now `/customers` at the end of the URL.
 
-![image alt text](.gitbook/assets/image_16.png)
+![image alt text](../img/image_16.png)
 
 Next, let’s introduce a feature of displaying more information about a customer when it’s clicked. We can do that by modifying the `td` tag holding the `CUSNUM` value to have a dynamically generated link to that specific customer, as shown. The `${...}` syntax is [string interpolation](http://jade-lang.com/reference/interpolation/) and makes referencing variables in strings significantly easier.
 
@@ -221,7 +221,7 @@ Note the :id reference in the first parameter of `app.get(...)`. This says that 
 
 Restarting your application and navigating to `/customers` should reveal the results shown below. Notice how the customer number is now a link.
 
-![image alt text](.gitbook/assets/image_17.png)
+![image alt text](../img/image_17.png)
 
 Next, create a `customer.pug` file in the `views` directory to facilitate the previous `res.render('customer', ...)`, as shown below. Note that this view was singular and the other one was plural \(`customer.pug` vs. `customers.pug`\) as that’s a common convention.
 
@@ -248,7 +248,6 @@ a(href='/customers') Back
 
 Restart the application, go to the `/customers` page and click on a customer. You should see a page similar to the below.
 
-![image alt text](.gitbook/assets/image_18.png)
+![image alt text](../img/image_18.png)
 
-## Please proceed to the next step
-
+### Proceed to [Step 8: Creating Crud](step-8-creating-crud.md)

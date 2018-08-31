@@ -8,23 +8,23 @@ This is a lab to meant to give you exposure on how Node.js works on the IBM i pl
 
 Go to [https://spaces.litmis.com](https://spaces.litmis.com) _\(Ctrl+click to open new tab\)_ and select SIGN IN, as show below.
 
-![image alt text](.gitbook/assets/image_0.png)
+![image alt text](../../img/image_0.png)
 
 Select the authentication mechanism of your choice. If you don't have an account with the options listed, sign up for a free Github.com profile and return back to this page once your Github profile is setup.
 
-![image alt text](.gitbook/assets/image_1.png)
+![image alt text](../img/image_1.png)
 
 Once logged in you can create a new space, as shown below.
 
-![image alt text](.gitbook/assets/image_2.png)
+![image alt text](../img/image_2.png)
 
 You will be presented with the below pop-up. Give a name to this space, enter the promo code of **BETA**, **select the \*\***_Node.js_**\*\* radio button**, and click the Create button.
 
-![image alt text](.gitbook/assets/image_3.png)
+![image alt text](../img/image_3.png)
 
 Now you should see a new box on your page that represents your newly created Space.
 
-![image alt text](.gitbook/assets/image_4.png)
+![image alt text](../img/image_4.png)
 
 There are four buttons which constitute actions you can take with your Space. They are \(left to right\):
 
@@ -50,5 +50,5 @@ export LITMIS_PORT_TEST=22222
 export LITMIS_PORT_PRODUCTION=33333
 ```
 
-### Proceed to the next step
+### Proceed to [Step 2: Hello World](step-2-hello-world.md)
 

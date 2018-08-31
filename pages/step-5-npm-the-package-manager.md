@@ -133,7 +133,6 @@ Notice how `PORT=60263` is specified _before_ the node `index.js` portion. This 
 
 Go ahead and open a browser window to see your Express hello world app running, as shown below.
 
-![image alt text](.gitbook/assets/image_13.png)
+![image alt text](../img/image_13.png)
 
-## Proceed to the next step
-
+### Proceed to [Step 6: Connecting to DB2](step-6-connecting-to-db2.md)

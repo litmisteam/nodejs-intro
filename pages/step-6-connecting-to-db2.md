@@ -122,9 +122,8 @@ Running on port 60263
 
 Open your browser and you should see something similar to the below screenshot.
 
-![image alt text](.gitbook/assets/image_14.png)
+![image alt text](../img/image_14.png)
 
 **Victory! Your Node.js is connecting to the database.**
 
-## Proceed to the next step
-
+### Proceed to [Step 7: The View Layer](step-7-the-view-layer.md)

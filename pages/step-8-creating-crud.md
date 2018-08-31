@@ -237,17 +237,16 @@ app.get('/customers/:id/delete', function(req, res) {
 
 Below is a screenshot of the new customer listing.
 
-![image alt text](.gitbook/assets/image_19.png)
+![image alt text](../img/image_19.png)
 
 Below is the **New Customer** page.
 
-![image alt text](.gitbook/assets/image_20.png)
+![image alt text](../img/image_20.png)
 
 Below is the **Edit Customer** page.
 
-![image alt text](.gitbook/assets/image_21.png)
+![image alt text](../img/image_21.png)
 
 **That concludes the Customer CRUD application!**
 
-## Proceed to the next step
-
+### Proceed to [Step 9: Websocket tutorial](step-9-websockets.md)

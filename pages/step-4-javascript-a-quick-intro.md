@@ -148,5 +148,4 @@ What's the difference?
 
 For the most part they are functionally the same. What's significant is the concept behind it. When a request is made to the root of the website, the function specified on `http.createServer(...)` will be invoked, **eventually**. What do I mean by "eventually"? Well, first the code within `http.createServer(...)` will run a bunch of other code, including parsing the query string or reading in HTML form variables, _before_ it invokes the function passed as the second parameter. This is the "call back" concept, where a called function will "call back" into a function that was passed to it. Many times the callback will have parameters defined to receive input, in this case the `req` and `res` variables. RPG has a similar concept with [procedure pointers](http://www.ibm.com/developerworks/ibmi/library/i-rpg-pointers/).
 
-## Proceed to the next step
-
+### Proceed to [Step 5: REPL Intro](step-5-npm-the-package-manager.md)

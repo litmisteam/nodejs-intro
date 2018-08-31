@@ -1,10 +1,10 @@
 # Introduction
 
-![](.gitbook/assets/nodejs-intro-to.png)
+![](img/nodejs-intro-to.png)
 
 ## Sponsor
 
-![](.gitbook/assets/ls-possible-prices.png)
+![](img/ls-possible-prices.png)
 
 [litmis.com](http://litmis.com/) \| [@litmisteam](https://twitter.com/litmisteam) \| [team@litmis.com](mailto:team@litmis.com)
 
@@ -27,5 +27,18 @@ This course is both a lab and a reference. It is a lab considering there is an e
 * When you see a % sign that means you are at a shell prompt \(aka PASE environment on IBM i\)
 * When you see `>` that means you are in the Node.js REPL \(more on that later\).
 
-Proceed to [Summary](summary.md)
+## Summary
 
+* [Introduction](./)
+* [Step 1: Litmis Space Configuration](pages/step-1-litmis-space-configuration.md)
+* [Step 2: Hello World!](pages/step-2-hello-world.md)
+* [Step 3: REPL Intro](pages/step-3-repl-intro.md)
+* [Step 4: Javascript, A Quick Intro](pages/step-4-javascript-a-quick-intro.md)
+* [Step 5: npm, The Package Manager](pages/step-5-npm-the-package-manager.md)
+* [Step 8: Connecting to DB2](pages/step-8-connecting-to-db2.md)
+* [Step 9: The View Layer](pages/step-9-the-view-layer.md)
+* [Step 10: Creating CRUD](pages/step-10-creating-crud.md)
+* [Step 11: Websockets](pages/step-11-websockets.md)
+* [Future Topics ](pages/future-topics.md)
+
+Proceed to [Step 1: Litmis Space Configuration](pages/step-1-litmis-space-configuration.md)
