@@ -8,7 +8,7 @@ This is a lab to meant to give you exposure on how Node.js works on the IBM i pl
 
 Go to [https://spaces.litmis.com](https://spaces.litmis.com) _\(Ctrl+click to open new tab\)_ and select SIGN IN, as show below.
 
-![image alt text](../../img/image_0.png)
+![image alt text](../img/image_0.png)
 
 Select the authentication mechanism of your choice. If you don't have an account with the options listed, sign up for a free Github.com profile and return back to this page once your Github profile is setup.
 
